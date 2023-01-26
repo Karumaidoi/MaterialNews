@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'iNews',
       theme: ThemeData(
         useMaterial3: true,
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.amber,
       ),
       home: const HomePage(),
     );
