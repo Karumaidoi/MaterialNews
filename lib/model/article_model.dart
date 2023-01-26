@@ -1,5 +1,4 @@
 class ArticleModel {
-  Source? source;
   String? author;
   String? title;
   String? description;
@@ -9,8 +8,7 @@ class ArticleModel {
   String? content;
 
   ArticleModel(
-      {required this.source,
-      required this.author,
+      {required this.author,
       required this.title,
       required this.description,
       required this.url,
@@ -19,7 +17,6 @@ class ArticleModel {
       required this.content});
 
   ArticleModel.fromJson(Map<String, dynamic> json) {
-    source = (json['source'] != null ? Source.fromJson(json['source']) : null)!;
     author = json['author'];
     title = json['title'];
     description = json['description'];
@@ -31,9 +28,7 @@ class ArticleModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    if (source != null) {
-      data['source'] = source!.toJson();
-    }
+
     data['author'] = author;
     data['title'] = title;
     data['description'] = description;

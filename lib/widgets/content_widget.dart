@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({super.key});
+  final String title;
+  final String caption;
+  final String publishedAt;
+  const CardWidget(
+      {super.key,
+      required this.title,
+      required this.caption,
+      required this.publishedAt});
 
   @override
   Widget build(BuildContext context) {

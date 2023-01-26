@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../api/api_service.dart';
+import '../../model/article_model.dart';
 import '../../widgets/content_widget.dart';
 
 class TeslaNews extends StatelessWidget {
@@ -28,22 +30,47 @@ class TeslaNews extends StatelessWidget {
               )
             ]),
           ),
-          body: const TabBarView(children: [TeslaNewsWidgets(), CrunchNews()]),
+          body: const TabBarView(children: [TeslaNewsWidget(), CrunchNews()]),
         ));
   }
 }
 
-class TeslaNewsWidgets extends StatelessWidget {
-  const TeslaNewsWidgets({super.key});
+class TeslaNewsWidget extends StatefulWidget {
+  const TeslaNewsWidget({super.key});
+
+  @override
+  State<TeslaNewsWidget> createState() => _TeslaNewsWidgetState();
+}
+
+class _TeslaNewsWidgetState extends State<TeslaNewsWidget> {
+  late Future<List<ArticleModel>> newsData;
+
+  @override
+  void initState() {
+    newsData = NetworkData().getCurrentNews();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: ListView(
-        children: const [CardWidget(), CardWidget()],
-      ),
-    );
+    return FutureBuilder<List<ArticleModel>>(
+        future: newsData,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return CardWidget(
+                  title: 'snapshot.data![index].title!',
+                  caption: 'snapshot.data![index].description!',
+                  publishedAt: 'snapshot.data![index].publishedAt!',
+                );
+              });
+        });
   }
 }
 
